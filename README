@@ -1,23 +1,23 @@
 qtonrails
 =========
 
-This is currently a very early attempt at building a simple framework that would let a developer comfortable with Rails generate a runnable Qt4 project. When we say early attempt, we really mean it. So far you can generate a Qt from from a Rails model.
+This is currently a very early attempt at building a simple framework that would let a developer comfortable with Rails generate a runnable Qt4 project. When we say early attempt, we really mean it. So far you can generate a Qt form from from a Rails model.
 
 
 example
 =======
 
-Give the a model called Product existing in your app/models directory, you can
+Given a model called Product which exists in your app/models directory, you can
 
 ./script/generate qform Product
 
-to create vendor/plugins/qtonrails/app/qforms/product_qform.ui
+to create the file vendor/plugins/qtonrails/app/qforms/product_qform.ui
 
-Open the form in Qt Designer to see what's been generated, for example,
+Open the form in Qt Designer to see what's been generated, on Kubuntu for example,
 
 designer-qt vendor/plugins/qtonrails/app/qforms/product_qform.ui
 
-Hey presto! You should see a generated form.
+Hey presto! You should see the generated Qt form for the Rails Product model.
 
 
 installation
@@ -31,7 +31,7 @@ Easily installed as a Rails plugin:
 whoami
 ======
 
-My name is Declan McGrath. I'm a commercial Ruby developer and an Open Source enthusiast quitely watching the Irish FOSS scene burn brightly. You can follow me on Twitter http://twitter.com/theirishpenguin and some people have even been known to get me at the email declan [AT] weuseopensource.com :-)
+My name is Declan McGrath. I'm a commercial Ruby developer and an Open Source enthusiast quitely watching the Irish FOSS scene burn brightly. You can follow me on Twitter at http://twitter.com/theirishpenguin and some people have even been known to get me at the email declan [AT] weuseopensource.com :-) For more information on the man behind the mouse you can check out https://wiki.ubuntu.com/declanmg
 
 
 Copyright (c) 2009 [Declan McGrath], released under the MIT license
