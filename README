@@ -1,7 +1,7 @@
 qtonrails
 =========
 
-This is currently a very early attempt at building a simple framework that would let a developer comfortable with Rails generate a runnable Qt4 project. When we say early attempt, we really mean it. So far you can generate a Qt form from from a Rails model.
+This is currently an early attempt at building a simple framework that would let a developer comfortable with Rails generate a runnable Qt4 project. When we say early attempt, we really mean it. So far you can generate a Qt form from from a Rails model.
 
 
 example
@@ -19,6 +19,13 @@ designer-qt vendor/plugins/qtonrails/app/qforms/product_qform.ui
 
 Hey presto! You should see the generated Qt form for the Rails Product model.
 
+To add domain logic behind this qform run
+
+./script/generate presenters
+
+This will generate a presenter file for each form in vendor/plugins/qtonrails/app/qforms directory. After running you should have a product_qform.rb file in the vendor/plugins/qtonrails/app/presenters directory. You can edit this file to change the presentation logic that controls the qform.
+
+Note: For each qform, this step also auto-generates a .ui.rb file in the vendor/plugins/qtonrails/app/ui_proxies directory. These .ui.rb files are a Ruby code representation of the Qt Designer .ui files. You should never hand edit these files as they will be overwritten on calling this generator again. Instead change the presenter files.
 
 installation
 ============
