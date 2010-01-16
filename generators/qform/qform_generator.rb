@@ -19,6 +19,6 @@ class QformGenerator < Rails::Generator::NamedBase
 
     the_model_keys = the_model_keys - timestamps
     timestamps + the_model_keys
-end
+  end
 
 end

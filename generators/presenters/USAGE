@@ -1,0 +1,4 @@
+Usage: ./script/generate presenters
+Description:
+    Auto-generates presenter files for all forms in vendor/plugins/qtonrails/app/qforms directory. The generated files live in the vendor/plugins/qtonrails/app/presenters directory. You can edit these files to change the presentation logic that controls the qform.
+    For each qform, this step also auto-generates a .ui.rb file in the vendor/plugins/qtonrails/app/ui_proxies directory. These .ui.rb files are a Ruby code representation of the Qt Designer .ui files. You should never hand edit these files as they will be overwritten on calling this generator again. Instead change the presenter files.
