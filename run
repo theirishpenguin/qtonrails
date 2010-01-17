@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/config/boot'
+
+regular_usage = 'Usage: ./script/run # To run entire app'
+proxy_usage = 'Usage: ./script/run proxy app/ui_proxies/yourfile.ui.rb # To run one widget proxy'
+
+if ARGV.empty?
+    app = Qt::Application.new(ARGV)
+    Router.choose
+    app.exec
+elsif ARGV[0] == 'proxy'
+    system %^ruby #{ARGV[1]}^
+else
+    puts "Here is usage examples:
+
+#{regular_usage}
+
+#{proxy_usage}
+
+"
+
+end
+

@@ -1,0 +1,1 @@
+QTRAILS_ENV = 'development'
