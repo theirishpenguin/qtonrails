@@ -5,7 +5,7 @@ class QviewGenerator < Rails::Generator::NamedBase
 
       qviews_dir = 'vendor/plugins/qtonrails/app/qviews'
       m.directory qviews_dir
-      m.template('qview.rb.template', "#{qviews_dir}/#{plural_name}_view.rb", :assigns => {:class_name => class_name } )
+      m.template('qview.rb.template', "#{qviews_dir}/#{plural_name}_view.rb", :assigns => {:class_name => class_name, :controller_name => plural_name } )
     end
   end
 

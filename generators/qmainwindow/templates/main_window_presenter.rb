@@ -5,7 +5,9 @@ require 'app/ui_proxies/qmainwindow.ui.rb'
 # We inherit from Qt:MainWindow as it gives us access to User Interface
 # functionality such as connecting slots and signals
 class MainWindow < Qt::MainWindow
- 
+
+    @@active_controller = nil 
+
 #    slots 'view_clicked()'
 #    slots 'new_clicked()'
     slots 'edit_clicked()'
@@ -16,8 +18,10 @@ class MainWindow < Qt::MainWindow
     # can be used to customise how the form looks on startup. The method
     # initialize() is a constructor in Ruby
  
-    def initialize(parent, tablemodel)
- 
+    def initialize(parent, tablemodel, active_controller)
+
+       @@active_controller = active_controller
+
        # Widgets in Qt can optionally be children of other widgets.
        # That's why we accept parent as a parameter
  
@@ -53,7 +57,7 @@ class MainWindow < Qt::MainWindow
 
     def edit_clicked
         Router.params[:id] = 1
-        Router.choose({:controller => 'products', :action => 'edit'})
+        Router.choose({:controller => @@active_controller, :action => 'edit'})
     end
 
 end

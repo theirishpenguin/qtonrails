@@ -9,7 +9,7 @@ class <%= class_name.pluralize %>View
            
   def index(records)
     tablemodel = <%= class_name %>TableModel.new(records)
-    @@index_screen = MainWindow.new(nil, tablemodel)
+    @@index_screen = MainWindow.new(nil, tablemodel, '<%= controller_name %>')
     @@index_screen.show
   end
 

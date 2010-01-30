@@ -5,15 +5,7 @@ This branch is way ahead of master in terms of development, features and stabili
 
 1. Ensure that you have at least one record in the database for the Rails model you are about to Qt-ify
 
-
-2. Secondly you need to carry out the following step:
-In the edit_clicked() function in vendor/plugins/qtonrails/generators/qmainwindow/templates/main_window_presenter.rb
-change the :controller value to point at your chosen model, eg. in the case of this example toys
-
-Router.choose({:controller => 'toys', :action => 'edit'})
-
-We will fix this!
-
+2. We've fixed an issue that used to require a step here
 
 3. Then do the following from the top level of your Rails project
 ./script/generate qform Toy
@@ -25,12 +17,7 @@ We will fix this!
 ./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
 
 
-4. Finally, edit config/routes.rb so that default route points at your chosen model's controller (in this example toys)
-
-eg. DEFAULT_ROUTE = {:controller => 'toys', :action => 'index'}
-
-We'll fix this too!
-
+4. We've fixed an issue that used to require a step here
 
 5. Finally, from within the vendor/plugins/qtonrails/ directory, execute the ./run command
 
