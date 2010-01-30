@@ -52,7 +52,7 @@ class MainWindow < Qt::MainWindow
     end
 
     def edit_clicked
-        Router.params[:id] = 2
+        Router.params[:id] = 1
         Router.choose({:controller => 'products', :action => 'edit'})
     end
 

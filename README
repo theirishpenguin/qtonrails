@@ -1,3 +1,46 @@
+NOTES FOR WIP_FORMS BRANCH
+==========================
+This branch is way ahead of master in terms of development, features and stability. It's still rough around the edges. If you'd like a play then you can certainly run through the following steps to understand how qtonrails works. Here goes...
+
+
+1. Ensure that you have at least one record in the database for the Rails model you are about to Qt-ify
+
+
+2. Secondly you need to carry out the following step:
+In the edit_clicked() function in vendor/plugins/qtonrails/generators/qmainwindow/templates/main_window_presenter.rb
+change the :controller value to point at your chosen model, eg. in the case of this example toys
+
+Router.choose({:controller => 'toys', :action => 'edit'})
+
+We will fix this!
+
+
+3. Then do the following from the top level of your Rails project
+./script/generate qform Toy
+./script/generate qpresenters
+./script/generate qtablemodel Toy
+./script/generate qcontroller Toy
+./script/generate qview Toy
+./script/generate qmainwindow
+./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
+
+
+4. Finally, edit config/routes.rb so that default route points at your chosen model's controller (in this example toys)
+
+eg. DEFAULT_ROUTE = {:controller => 'toys', :action => 'index'}
+
+We'll fix this too!
+
+
+5. Finally, from within the vendor/plugins/qtonrails/ directory, execute the ./run command
+
+What should happen?
+You should get to the list screen for your chosen model, which also acts as a home page. You can edit data directly in the grid. Or else you can click the edit button which (kinda) works - it will always bring up record 1 in your db for editing.
+
+The idea of this initial release is to show the kind of workflow possible out of the box with qtonrails; and also to help make architectural decisions such as how will we do things like the routing and lots lots more. If you fancy hacking on this project then please fire ahead. I'd be delighted to hear from you if you're interested in this project.
+
+THE REST OF THE README NOW CONTINUES THOUGH IS, IN PLACES, OUT OF DATE!
+
 qtonrails
 =========
 
