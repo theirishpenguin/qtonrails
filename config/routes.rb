@@ -1,1 +1,1 @@
-DEFAULT_ROUTE = {:controller => 'products', :action => 'edit'}
+DEFAULT_ROUTE = {:controller => 'products', :action => 'index'}

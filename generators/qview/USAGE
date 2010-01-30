@@ -1,0 +1,3 @@
+Usage: ./script/generate qform RailsModelName
+Description:
+    Adds a .ui file containing a QForm definition for the RailsModel to the vendor/plugins/qtonrails/app/qforms directory. This .ui file can be opened in Qt designer.

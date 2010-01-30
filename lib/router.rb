@@ -20,7 +20,7 @@ class Router
 
     # FIXME: TEMP HACK UNTIL WE HAVE BOTH INDEX AND EDIT SCREENS
     # WORKING TOGETHER THROUGH THE ROUTING SYSTEM
-    @@params[:id] = 2
+    #@@params[:id] = 2
 
     view = eval("#{name}View")
     controller = eval("#{name}Controller")

@@ -1,0 +1,10 @@
+class <%= class_name.pluralize %>Controller
+
+  def edit
+    <%= class_name %>.find(Router.params[:id])
+  end
+
+  def index
+    <%= class_name %>.all
+  end
+end

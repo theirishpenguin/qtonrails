@@ -21,9 +21,9 @@ Hey presto! You should see the generated Qt form for the Rails Product model.
 
 To add domain logic behind this qform run
 
-./script/generate presenters
+./script/generate qpresenters
 
-This will generate a presenter file for each form in vendor/plugins/qtonrails/app/qforms directory. After running you should have a product_qform.rb file in the vendor/plugins/qtonrails/app/presenters directory. You can edit this file to change the presentation logic that controls the qform.
+This will generate a presenter file for each form in vendor/plugins/qtonrails/app/qforms directory. After running you should have a product_qform.rb file in the vendor/plugins/qtonrails/app/qpresenters directory. You can edit this file to change the presentation logic that controls the qform.
 
 Note: For each qform, this step also auto-generates a .ui.rb file in the vendor/plugins/qtonrails/app/ui_proxies directory. These .ui.rb files are a Ruby code representation of the Qt Designer .ui files. You should never hand edit these files as they will be overwritten on calling this generator again. Instead change the presenter files.
 

@@ -4,7 +4,7 @@ require 'app/ui_proxies/<%= proxy_file %>' #eg. product_qform.ui.rb
 
 # We inherit from Qt:MainWindow as it gives us access to User Interface
 # functionality such as connecting slots and signals
-class Main < Qt::MainWindow
+class <%= class_name %>Window < Qt::MainWindow
  
     slots 'save_clicked()'
     slots 'cancel_clicked()'
@@ -27,15 +27,15 @@ class Main < Qt::MainWindow
        # Hold a reference to the domain object which contains the data - record
        @record = record
 
-       # The Main class we are in holds presentation logic and exists
-       # to 'manage' the mainWindow widget we created in Qt Designer earlier.
-       # An instance of this mainWindow widget is created and stored in @ui variable
+       # The class we are in holds presentation logic and exists
+       # to 'manage' the Window widget we created in Qt Designer earlier.
+       # An instance of this Window widget is created and stored in @ui variable
  
-       @ui = Ui::MainWindow.new
+       @ui = Ui::<%= class_name %>Window.new
  
-       # Calling setup_ui causes the mainWindow widget to be initialised with the
-       # defaults you may have specified in Qt Designer. Peer into the main_ui.rb 
-       # if you want to the full gory details
+       # Calling setup_ui causes the Window widget to be initialised with the
+       # defaults you may have specified in Qt Designer. Peer into the 
+       # related xxx_qform_ui.rb if you want to the full gory details
  
        @ui.setup_ui(self)
  

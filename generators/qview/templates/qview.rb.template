@@ -1,0 +1,16 @@
+class <%= class_name.pluralize %>View
+
+  @@index_screen = nil
+
+  def edit(record)
+    screen = <%= class_name %>Window.new(@@index_screen, record)
+    screen.show
+  end
+           
+  def index(records)
+    tablemodel = <%= class_name %>TableModel.new(records)
+    @@index_screen = MainWindow.new(nil, tablemodel)
+    @@index_screen.show
+  end
+
+end

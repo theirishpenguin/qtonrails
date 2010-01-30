@@ -1,5 +1,6 @@
 # Note: This booter does not use the same pattern as Rails - it's much simpler
 
+
 require 'rubygems'
 require 'Qt4'
 require 'activerecord'
@@ -17,11 +18,12 @@ module QtRails
 
     def self.start
       require "#{QTRAILS_ROOT}/lib/n_v_pair.rb"
-      
+
       Dir.glob("#{RAILS_ROOT}/app/models/*.rb") {|f| require f}
-      Dir.glob("#{QTRAILS_ROOT}/app/qmodels/*.rb") {|f| require f}
+      Dir.glob("#{QTRAILS_ROOT}/app/qtablemodels/*.rb") {|f| require f}
       Dir.glob("#{QTRAILS_ROOT}/app/qcontrollers/*.rb") {|f| require f}
       Dir.glob("#{QTRAILS_ROOT}/app/qviews/*.rb") {|f| require f}
+      Dir.glob("#{QTRAILS_ROOT}/app/qpresenters/*.rb") {|f| require f}
 
       require "#{QTRAILS_ROOT}/lib/router.rb"
       require "#{QTRAILS_ROOT}/config/environment.rb"
