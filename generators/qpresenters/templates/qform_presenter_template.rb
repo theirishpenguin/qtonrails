@@ -9,6 +9,8 @@ class <%= class_name %>Window < Qt::MainWindow
     slots 'save_clicked()'
     slots 'cancel_clicked()'
 
+    signals 'form_data_changed()'
+
     # We are then free to put our own code into this class without fear
     # of it being overwritten. Here we add a initialize function which
     # can be used to customise how the form looks on startup. The method
@@ -42,6 +44,8 @@ class <%= class_name %>Window < Qt::MainWindow
        connect(@ui.save_button, SIGNAL('clicked()'), self, SLOT('save_clicked()'))
        connect(@ui.cancel_button, SIGNAL('clicked()'), self, SLOT('close()'))
 
+       connect(self, SIGNAL('form_data_changed()'), parent, SLOT('refresh_now()'))
+
        load_data
     end
 
@@ -63,6 +67,9 @@ class <%= class_name %>Window < Qt::MainWindow
        @record.<%= attr_name %> = @ui.<%= attr_name %>_line_edit.text
        <% end %>
        @record.save
+
+       form_data_changed()
+
     end
 
 end

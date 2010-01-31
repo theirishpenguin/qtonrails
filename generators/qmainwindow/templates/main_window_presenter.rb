@@ -15,6 +15,7 @@ class MainWindow < Qt::MainWindow
     slots 'new_clicked()'
     slots 'edit_clicked()'
     slots 'delete_clicked()'
+    slots 'refresh_now()'
 
     # Example of how to expose a signal
     # signals 'selectionChanged(QItemSelection &selected)'
@@ -91,6 +92,8 @@ class MainWindow < Qt::MainWindow
         
         Router.params[:id] = record_id()
         Router.choose({:controller => @active_controller, :action => 'delete'})
+
+        refresh_now
     end
 
     # def rememberSelection(selected)
@@ -112,5 +115,17 @@ class MainWindow < Qt::MainWindow
        # converted using toInt()
 
        index.child(index.row, ID_COLUMN).data.toInt()
+     end
+
+     def refresh_now
+
+       # Important: We delegate to the router (& ultimately
+       # the controller) so that we involve the controller
+       # in the retrieval of data
+       Router.reindex(@active_controller.capitalize)
+     end
+
+     def reset_table(tablemodel)
+       @tableview.model = tablemodel
      end
 end

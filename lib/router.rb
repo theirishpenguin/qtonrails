@@ -18,10 +18,6 @@ class Router
     route = DEFAULT_ROUTE.clone if route.blank?
     name = route[:controller].to_s.capitalize
 
-    # FIXME: TEMP HACK UNTIL WE HAVE BOTH INDEX AND EDIT SCREENS
-    # WORKING TOGETHER THROUGH THE ROUTING SYSTEM
-    #@@params[:id] = 2
-
     view = eval("#{name}View")
     controller = eval("#{name}Controller")
     data = controller.new.send(route[:action])
@@ -29,4 +25,13 @@ class Router
     reset_params
   end
 
+  def self.reindex(name)
+
+    # Note: Reindex'ing does not involve params
+
+    view = eval("#{name}View")
+    controller = eval("#{name}Controller")
+    data = controller.new.send('index')
+    view.new.send('reindex', data)
+  end
 end
