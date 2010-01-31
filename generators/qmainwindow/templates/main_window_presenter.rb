@@ -14,7 +14,7 @@ class MainWindow < Qt::MainWindow
     # slots 'view_clicked()'
      slots 'new_clicked()'
     slots 'edit_clicked()'
-    # slots 'delete_clicked()'
+    slots 'delete_clicked()'
 
     # Example of how to expose a signal
     # signals 'selectionChanged(QItemSelection &selected)'
@@ -63,7 +63,7 @@ class MainWindow < Qt::MainWindow
        # connect(@ui.viewButton, SIGNAL('clicked()'), self, SLOT('view_clicked()'))
        connect(@ui.newButton, SIGNAL('clicked()'), self, SLOT('new_clicked()'))
        connect(@ui.editButton, SIGNAL('clicked()'), self, SLOT('edit_clicked()'))
-       # connect(@ui.deleteButton, SIGNAL('clicked()'), self, SLOT('delete_clicked()'))
+       connect(@ui.deleteButton, SIGNAL('clicked()'), self, SLOT('delete_clicked()'))
        connect(@ui.actionQuit, SIGNAL('triggered()'), self, SLOT('close()'))
 
        # Example of wiring a signal to a slot. Note how the C++ notation is used for the params
@@ -84,6 +84,12 @@ class MainWindow < Qt::MainWindow
         
         Router.params[:id] = record_id()
         Router.choose({:controller => @active_controller, :action => 'edit'})
+    end
+
+    def delete_clicked
+        
+        Router.params[:id] = record_id()
+        Router.choose({:controller => @active_controller, :action => 'delete'})
     end
 
     # def rememberSelection(selected)

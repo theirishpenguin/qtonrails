@@ -8,6 +8,10 @@ class <%= class_name.pluralize %>Controller
     <%= class_name %>.find(Router.params[:id])
   end
 
+  def delete
+    <%= class_name %>.find(Router.params[:id]).destroy
+  end
+
   def index
     <%= class_name %>.all
   end

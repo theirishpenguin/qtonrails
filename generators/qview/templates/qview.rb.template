@@ -11,6 +11,10 @@ class <%= class_name.pluralize %>View
     screen = <%= class_name %>Window.new(@@index_screen, record)
     screen.show
   end
+
+  def delete(record)
+    # Do nothing
+  end
            
   def index(records)
     tablemodel = <%= class_name %>TableModel.new(records)
