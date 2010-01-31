@@ -2,6 +2,11 @@ class <%= class_name.pluralize %>View
 
   @@index_screen = nil
 
+  def view(record)
+    screen = <%= class_name %>ReadOnlyWindow.new(@@index_screen, record)
+    screen.show
+  end
+
   def new(record)
     screen = <%= class_name %>Window.new(@@index_screen, record)
     screen.show

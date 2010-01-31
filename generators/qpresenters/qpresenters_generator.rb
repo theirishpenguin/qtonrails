@@ -27,6 +27,7 @@ class QpresentersGenerator < Rails::Generator::Base
 
         m.template('qform_presenter_template.rb', "vendor/plugins/qtonrails/app/qpresenters/#{lowered_class_name}_qform_presenter.rb", :assigns => {:proxy_file => ui_proxy_filename, :model_keys => model_keys(eval(class_name).new), :class_name => class_name } )
 
+        m.template('qform_read_only_presenter_template.rb', "vendor/plugins/qtonrails/app/qpresenters/#{lowered_class_name}_qform_read_only_presenter.rb", :assigns => {:proxy_file => ui_proxy_filename, :model_keys => model_keys(eval(class_name).new), :class_name => class_name } )
       end
 
     end

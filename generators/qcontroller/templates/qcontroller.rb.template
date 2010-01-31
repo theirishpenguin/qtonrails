@@ -1,5 +1,9 @@
 class <%= class_name.pluralize %>Controller
 
+  def view
+    <%= class_name %>.find(Router.params[:id])
+  end
+
   def new
     <%= class_name %>.new
   end

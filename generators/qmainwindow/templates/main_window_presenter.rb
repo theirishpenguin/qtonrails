@@ -11,8 +11,8 @@ class MainWindow < Qt::MainWindow
     @active_controller = nil
 
     # Expose slots
-    # slots 'view_clicked()'
-     slots 'new_clicked()'
+    slots 'view_clicked()'
+    slots 'new_clicked()'
     slots 'edit_clicked()'
     slots 'delete_clicked()'
 
@@ -60,7 +60,7 @@ class MainWindow < Qt::MainWindow
        # 
        # @tablemodel = tablemodel # ie. Don't do this
 
-       # connect(@ui.viewButton, SIGNAL('clicked()'), self, SLOT('view_clicked()'))
+       connect(@ui.viewButton, SIGNAL('clicked()'), self, SLOT('view_clicked()'))
        connect(@ui.newButton, SIGNAL('clicked()'), self, SLOT('new_clicked()'))
        connect(@ui.editButton, SIGNAL('clicked()'), self, SLOT('edit_clicked()'))
        connect(@ui.deleteButton, SIGNAL('clicked()'), self, SLOT('delete_clicked()'))
@@ -72,7 +72,8 @@ class MainWindow < Qt::MainWindow
     end
 
     def view_clicked
-      # Display View page (perhaps printer friendly)
+        Router.params[:id] = record_id()
+        Router.choose({:controller => @active_controller, :action => 'view'})
     end
 
     def new_clicked
