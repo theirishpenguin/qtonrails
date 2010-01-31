@@ -40,6 +40,9 @@ class <%= class_name %>ReadOnlyWindow < Qt::MainWindow
  
        connect(@ui.cancel_button, SIGNAL('clicked()'), self, SLOT('close()'))
 
+       @ui.save_button.hide
+       @ui.cancel_button.setText('Close')
+
        load_data
     end
 

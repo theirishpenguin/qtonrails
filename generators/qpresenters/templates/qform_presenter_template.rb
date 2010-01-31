@@ -70,6 +70,7 @@ class <%= class_name %>Window < Qt::MainWindow
 
        form_data_changed()
 
+       close()
     end
 
 end
