@@ -1,58 +1,8 @@
-NOTES FOR WIP_FORMS BRANCH
-==========================
-This branch is way ahead of master in terms of development, features and stability. It's still rough around the edges. If you'd like a play then you can certainly run through the following steps to understand how qtonrails works. Here goes...
-
-
-1. Ensure that you have at least one record in the database for the Rails model you are about to Qt-ify
-
-2. If you're a *NIX user then you should be able to simply run ./script/generate qtify Toy and skip step 3
-
-3. Then do the following from the top level of your Rails project
-./script/generate qform Toy
-./script/generate qpresenters
-./script/generate qtablemodel Toy
-./script/generate qcontroller Toy
-./script/generate qview Toy
-./script/generate qmainwindow
-./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
-
-4. Finally, from within the vendor/plugins/qtonrails/ directory, execute the ./run command
-
-What should happen?
-You should get to the list screen for your chosen model, which also acts as a home page. You can edit data directly in the grid. Or else you can click the edit button which (kinda) works - it will always bring up record 1 in your db for editing.
-
-The idea of this initial release is to show the kind of workflow possible out of the box with qtonrails; and also to help make architectural decisions such as how will we do things like the routing and lots lots more. If you fancy hacking on this project then please fire ahead. I'd be delighted to hear from you if you're interested in this project.
-
-THE REST OF THE README NOW CONTINUES THOUGH IS, IN PLACES, OUT OF DATE!
-
 qtonrails
 =========
 
-This is currently an early attempt at building a simple framework that would let a developer comfortable with Rails generate a runnable Qt4 project. When we say early attempt, we really mean it. So far you can generate a Qt form from from a Rails model.
+This is currently an work-in-progress attempt at building a simple framework that would let a developer comfortable with Rails generate a runnable Qt4 project. So far you can generate a simple CRUD Qt Application by installing the qtonrails plugin and using some generators.
 
-
-example
-=======
-
-Given a model called Product which exists in your app/models directory, you can
-
-./script/generate qform Product
-
-to create the file vendor/plugins/qtonrails/app/qforms/product_qform.ui
-
-Open the form in Qt Designer to see what's been generated, on Kubuntu for example,
-
-designer-qt vendor/plugins/qtonrails/app/qforms/product_qform.ui
-
-Hey presto! You should see the generated Qt form for the Rails Product model.
-
-To add domain logic behind this qform run
-
-./script/generate qpresenters
-
-This will generate a presenter file for each form in vendor/plugins/qtonrails/app/qforms directory. After running you should have a product_qform.rb file in the vendor/plugins/qtonrails/app/qpresenters directory. You can edit this file to change the presentation logic that controls the qform.
-
-Note: For each qform, this step also auto-generates a .ui.rb file in the vendor/plugins/qtonrails/app/ui_proxies directory. These .ui.rb files are a Ruby code representation of the Qt Designer .ui files. You should never hand edit these files as they will be overwritten on calling this generator again. Instead change the presenter files.
 
 installation
 ============
@@ -62,10 +12,76 @@ Easily installed as a Rails plugin:
 ./script/plugin install git://github.com/theirishpenguin/qtonrails.git
 
 
+usage
+=====
+If you'd like a play then you can certainly run through the following steps to understand how qtonrails works. Here goes...
+
+1. You are going to Qt-ify one of your existing Rails models. Ensure that you have at least one record in the database for that model
+
+2. Ensure you are in the top level directory of your Rails project (ie. not in vendor/plugins/qtonrails)
+
+3. If you're a *NIX user then you should be able to simply run ./script/generate qtify YourModelName and straight to step 5
+
+4. Run the following
+./script/generate qform YourModelName
+./script/generate qpresenters
+./script/generate qtablemodel YourModelName
+./script/generate qcontroller YourModelName
+./script/generate qview YourModelName
+./script/generate qmainwindow
+./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
+
+5. Finally, navigate to the vendor/plugins/qtonrails/ directory and execute the ./run command
+
+What should happen?
+===================
+You should get to the list screen for your chosen model, which also acts as a home page. You can do the usual CRUD stuff
+- View the record
+- Create a new record
+- Edit the record data directly in the grid. Or else you can click the edit button, which will bring up your chosen record for editing.
+- Delete a record
+
+The idea of this initial release is to show the kind of workflow possible out of the box with qtonrails; and also to help make architectural decisions such as how will we do things like the routing and lots lots more. If you fancy hacking on this project then please fire ahead. I'd be delighted to hear from you if you're interested in this project.
+
+
+generators
+==========
+Usage: ./script/generate qcontroller RailsModelName
+Description:
+    Adds an .rb file containing a QController definition for the RailsModel to the vendor/plugins/qtonrails/app/qcontrollers directory. QControllers are responsible for deciding what data is to be retrieved for the related QView.
+
+Usage: ./script/generate qform RailsModelName
+Description:
+    Adds a .ui file containing a QForm definition for the RailsModel to the vendor/plugins/qtonrails/app/qdesigns directory. This .ui file can be opened in Qt designer.
+
+Usage: ./script/generate qmainwindow
+Description:
+    Adds a .ui file containing a Qt::MainWindow definition to the vendor/plugins/qtonrails/app/qdesigns directory. This .ui file can be opened in Qt designer. Additionally it creates a ui_proxy (Ruby presentation of the .ui file) for the Qt::MainWindow along with a qpresenter file. NOTE: There is currently a bug that requires this generator to be run twice - it does not work correctly if only run once.
+
+Usage: ./script/generate presenters
+Description:
+    Auto-generates presenter files for all qforms in vendor/plugins/qtonrails/app/qdesigns directory. The generated files live in the vendor/plugins/qtonrails/app/presenters directory. You can edit these files to change the presentation logic that controls the qform.
+
+    For each qform, this step also auto-generates a .ui.rb file in the vendor/plugins/qtonrails/app/ui_proxies directory. These .ui.rb files are a Ruby code representation of the Qt Designer .ui files. You should never hand edit these files as they will be overwritten on calling this generator again. Instead change the presenter files.
+
+Usage: ./script/generate qtablemodel RailsModelName
+Description:
+    Adds a qtablemodel.rb file and a qtablemodel_gen.rb file to for the RailsModel to the vendor/plugins/qtonrails/app/qtablesmodels directory. A tablemodel (Qt::AbstractTableModel) sits between a list of your Rails models (eg. a list of Product objects) and the widget that displays them in your application (eg. a Qt::TableView widget). A tablemodel is just data - it doesn't know that it's based on a Product model. The qtablemodel_gen.rb file is an autogenerated Ruby representation of tablemodel and is not intended to be edited. Rather, edit the plain qtablemodel.rb file if you need to alter the qtablemodel code.
+
+Usage: ./script/generate qtify RailsModelName
+Description:
+    This is the qtonrails equivalent of ./script/generate scaffold Foo in the traditional Rails sense. It creates the full set of skeleton files under the vendor/plugins/qtonrails/app directory to run a Qt version of your Rails model. After generating, you can run your Qt application form the vendor/plugins/qtonrails directory using the ./run command. Additionally, you can find .ui files under the vendor/plugins/qtonrails/app/qdesigns directory that can be opened and edited in Qt Designer. Also there are editable files under the qcontrollers, qpresenters, qtablemodels (though not the _gen.rb file) and qviews directories. The files in the ui_proxies directory are not intended to be edited.
+
+Usage: ./script/generate qview RailsModelName
+Description:
+    Adds a .rb file containing a QView definition for the RailsModel to the vendor/plugins/qtonrails/app/qviews directory. The qview decides what screen to display or how to refresh a screen that is already shown. As such it is probably more like a controller in the traditional Rails sense than a View.
+
+
 whoami
 ======
 
 My name is Declan McGrath. I'm a commercial Ruby developer and an Open Source enthusiast quitely watching the Irish FOSS scene burn brightly. You can follow me on Twitter at http://twitter.com/theirishpenguin and some people have even been known to get me at the email declan [AT] weuseopensource.com :-) For more information on the man behind the mouse you can check out https://wiki.ubuntu.com/declanmg
+
 
 contribute
 ==========
