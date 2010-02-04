@@ -6,7 +6,9 @@ class QpresentersGenerator < Rails::Generator::Base
       ui_files = Dir["#{qdesigns_dir}/*qform.ui"]
       ui_proxies_dir = "#{RAILS_ROOT}/vendor/plugins/qtonrails/app/ui_proxies"
       qpresenters_dir = "#{RAILS_ROOT}/vendor/plugins/qtonrails/app/qpresenters"
-      # FIXME: Why doesnt 'm.directory ui_proxies_dir' work if space in dir, instead we have to do the following 2 lines
+#      m.directory ui_proxies_dir
+#      m.directory qpresenters_dir
+#      # FIXME: Why doesnt 'm.directory ui_proxies_dir' work if space in dir, instead we have to do the following 2 lines
       require 'fileutils'
       FileUtils.mkdir_p ui_proxies_dir
       FileUtils.mkdir_p qpresenters_dir
