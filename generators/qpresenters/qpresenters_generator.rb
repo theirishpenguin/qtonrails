@@ -2,8 +2,8 @@ class QpresentersGenerator < Rails::Generator::Base
 
   def manifest
     record do |m|
-      qforms_dir = "#{RAILS_ROOT}/vendor/plugins/qtonrails/app/qforms"
-      ui_files = Dir["#{qforms_dir}/*qform.ui"]
+      qdesigns_dir = "#{RAILS_ROOT}/vendor/plugins/qtonrails/app/qdesigns"
+      ui_files = Dir["#{qdesigns_dir}/*qform.ui"]
       ui_proxies_dir = "#{RAILS_ROOT}/vendor/plugins/qtonrails/app/ui_proxies"
       qpresenters_dir = "#{RAILS_ROOT}/vendor/plugins/qtonrails/app/qpresenters"
       # FIXME: Why doesnt 'm.directory ui_proxies_dir' work if space in dir, instead we have to do the following 2 lines
@@ -13,11 +13,10 @@ class QpresentersGenerator < Rails::Generator::Base
 
       ui_files.each do |ui_f|
         #TODO: Tighten up qforms substitution more
-        ui_proxy_filepath = ui_f.gsub('qforms', 'ui_proxies') + '.rb'
+        ui_proxy_filepath = ui_f.gsub('qdesigns', 'ui_proxies') + '.rb'
         command = %^rbuic4 "#{ui_f}" -x -o "#{ui_proxy_filepath}"^
 
         system command
-
 
         ui_proxy_filename = File.basename(ui_proxy_filepath) 
         

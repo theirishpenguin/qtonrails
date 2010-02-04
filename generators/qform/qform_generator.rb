@@ -2,9 +2,9 @@ class QformGenerator < Rails::Generator::NamedBase
 
   def manifest
     record do |m|
-      qform_dir = 'vendor/plugins/qtonrails/app/qforms'
-      m.directory qform_dir
-      m.template('ui/qform_1col_template.ui', "#{qform_dir}/#{singular_name}_qform.ui", :assigns => {:model_keys => model_keys(eval(class_name).new), :class_name => class_name } )
+      qdesigns_dir = 'vendor/plugins/qtonrails/app/qdesigns'
+      m.directory qdesigns_dir
+      m.template('ui/qform_1col_template.ui', "#{qdesigns_dir}/#{singular_name}_qform.ui", :assigns => {:model_keys => model_keys(eval(class_name).new), :class_name => class_name } )
     end
   end
 
