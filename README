@@ -5,7 +5,7 @@ This branch is way ahead of master in terms of development, features and stabili
 
 1. Ensure that you have at least one record in the database for the Rails model you are about to Qt-ify
 
-2. We've fixed an issue that used to require a step here
+2. If you're a *NIX user then you should be able to simply run ./script/generate qtify Toy and skip step 3
 
 3. Then do the following from the top level of your Rails project
 ./script/generate qform Toy
@@ -16,10 +16,7 @@ This branch is way ahead of master in terms of development, features and stabili
 ./script/generate qmainwindow
 ./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
 
-
-4. We've fixed an issue that used to require a step here
-
-5. Finally, from within the vendor/plugins/qtonrails/ directory, execute the ./run command
+4. Finally, from within the vendor/plugins/qtonrails/ directory, execute the ./run command
 
 What should happen?
 You should get to the list screen for your chosen model, which also acts as a home page. You can edit data directly in the grid. Or else you can click the edit button which (kinda) works - it will always bring up record 1 in your db for editing.
