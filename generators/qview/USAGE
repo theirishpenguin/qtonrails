@@ -1,3 +1,3 @@
-Usage: ./script/generate qform RailsModelName
+Usage: ./script/generate qview RailsModelName
 Description:
-    Adds a .ui file containing a QForm definition for the RailsModel to the vendor/plugins/qtonrails/app/qforms directory. This .ui file can be opened in Qt designer.
+    Adds a .rb file containing a QView definition for the RailsModel to the vendor/plugins/qtonrails/app/qviews directory. The qview decides what screen to display or how to refresh a screen that is already shown. As such it is probably more like a controller in the traditional Rails sense than a View.

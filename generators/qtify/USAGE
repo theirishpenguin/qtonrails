@@ -1,3 +1,3 @@
-Usage: ./script/generate qform RailsModelName
+Usage: ./script/generate qtify RailsModelName
 Description:
-    Adds a .ui file containing a QForm definition for the RailsModel to the vendor/plugins/qtonrails/app/qforms directory. This .ui file can be opened in Qt designer.
+    This is the qtonrails equivalent of ./script/generate scaffold Foo in the traditional Rails sense. It creates the full set of skeleton files under the vendor/plugins/qtonrails/app directory to run a Qt version of your Rails model. After generating, you can run your Qt application form the vendor/plugins/qtonrails directory using the ./run command. Additionally, you can find .ui files under the vendor/plugins/qtonrails/app/qdesigns directory that can be opened and edited in Qt Designer. Also there are editable files under the qcontrollers, qpresenters, qtablemodels (though not the _gen.rb file) and qviews directories. The files in the ui_proxies directory are not intended to be edited.
