@@ -31,7 +31,9 @@ If you'd like a play then you can certainly run through the following steps to u
 ./script/generate qmainwindow
 ./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
 
-5. Finally, navigate to the vendor/plugins/qtonrails/ directory and execute the ./run command
+5. Require any gems your model layer needs to qtonrails/config/requires_list.rb
+
+6. Finally, navigate to the vendor/plugins/qtonrails/ directory and execute the ./run command
 
 What should happen?
 ===================

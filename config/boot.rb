@@ -9,6 +9,8 @@ require 'activerecord'
 #require 'actionpack'
 #require 'activesupport'
 
+require 'config/requires_list'
+
 module QtRails
 
   QTRAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(QTRAILS_ROOT)
