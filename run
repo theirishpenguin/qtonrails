@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+require 'rubygems'
+require 'Qt4'
+
 require File.dirname(__FILE__) + '/config/boot'
 
 regular_usage = 'Usage: ./script/run # To run entire app'

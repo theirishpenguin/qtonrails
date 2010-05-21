@@ -1,0 +1,3 @@
+Usage: ./script/generate kmainwindow
+Description:
+    Adds a .ui file containing a KDE::MainWindow definition to the vendor/plugins/qtonrails/app/qdesigns directory. This .ui file can be opened in Qt designer. Additionally it creates a ui_proxy (Ruby presentation of the .ui file) for the KDE::MainWindow along with a qpresenter file. NOTE: There is currently a bug that requires this generator to be run twice - it does not work correctly if only run once.

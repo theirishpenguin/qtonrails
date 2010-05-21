@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'korundum4'
+
+require File.dirname(__FILE__) + '/config/boot'
+
+regular_usage = 'Usage: ./script/run # To run entire app'
+proxy_usage = 'Usage: ./script/run proxy app/ui_proxies/yourfile.ui.rb # To run one widget proxy'
+
+if ARGV.empty?
+
+    description = "Basic KDE on Rails Example App"
+    version     = "0.01"
+    aboutData   = KDE::AboutData.new("kdeonrails", "", KDE.ki18n("KDE on Rails Example app"),
+        version, KDE.ki18n(description),KDE::AboutData::License_GPL,KDE.ki18n("(C) 2010 author goes here"))
+
+    aboutData.addAuthor(KDE.ki18n("author1"), KDE.ki18n("whatever they did"), "email1@example.com")
+    aboutData.addAuthor(KDE.ki18n("author2"), KDE.ki18n("they did something else"), "email2@example.com")
+
+    KDE::CmdLineArgs.init(ARGV, aboutData)
+    cmdlineoptions = KDE::CmdLineOptions.new()
+
+    app = KDE::Application.new()
+    Router.choose
+    app.exec
+elsif ARGV[0] == 'proxy'
+    system %^ruby #{ARGV[1]}^
+else
+    puts "Here is usage examples:
+
+#{regular_usage}
+
+#{proxy_usage}
+
+"
+
+end
+

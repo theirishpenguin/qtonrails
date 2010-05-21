@@ -1,9 +1,7 @@
 # Note: This booter does not use the same pattern as Rails - it's much simpler
 
 
-require 'rubygems'
-require 'Qt4'
-require 'activerecord'
+require 'active_record'
 
 #require 'activeresource'
 #require 'actionpack'
