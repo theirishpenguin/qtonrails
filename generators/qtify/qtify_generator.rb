@@ -20,14 +20,16 @@ class QtifyGenerator < Rails::Generator::Base
         puts `script/generate qview #{class_name}`
         puts '*' * 40
         puts "Completed Qt-ification of #{class_name} model"
+        puts ""
       end
 
 
       puts "Generating main window"
       puts '*' * 40
       FileUtils.rm_rf 'vendor/plugins/qtonrails/app/qdesigns/qmainwindow.ui' # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
-      puts `script/generate qmainwindow nav_items:#{args.join(',')}`
-      puts `script/generate qmainwindow nav_items:#{args.join(',')}` # NNB: Must do this last step twice!!! Dunno why
+      # Note: We pluralize here as the navigation items should be plural (like a controller name, not a model name)
+      puts `script/generate qmainwindow nav_items:#{args.map(&:pluralize).join(',')}`
+      puts `script/generate qmainwindow nav_items:#{args.map(&:pluralize).join(',')}` # NNB: Must do this last step twice!!! Dunno why
       puts '*' * 40
       puts "Completed main window"
 

@@ -13,7 +13,6 @@ class Router
     @@params = {}
   end
 
-
   def self.choose(route = {})
     route = DEFAULT_ROUTE.clone if route.blank?
     name = route[:controller].to_s.capitalize
@@ -25,13 +24,14 @@ class Router
     reset_params
   end
 
-  def self.reindex(name)
+  def self.reindex(name, index_screen)
 
-    # Note: Reindex'ing does not involve params
+    # Note: Reindex'ing does not involve router params
 
     view = eval("#{name}View")
     controller = eval("#{name}Controller")
     data = controller.new.send('index')
-    view.new.send('reindex', data)
+    view.new.send('reindex', data, index_screen)
   end
+
 end

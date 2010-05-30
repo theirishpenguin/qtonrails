@@ -44,7 +44,7 @@ class QmainwindowGenerator < Rails::Generator::Base
       # non-main window presenters
       qpresenters_dir = 'vendor/plugins/qtonrails/app/qpresenters'
       m.directory qpresenters_dir
-      m.template('main_window_presenter.rb', "#{qpresenters_dir}/main_window_presenter.rb")
+      m.template('main_window_presenter.rb', "#{qpresenters_dir}/main_window_presenter.rb", :assigns => {:nav_items => my_args['nav_items']})
 
     end
   end

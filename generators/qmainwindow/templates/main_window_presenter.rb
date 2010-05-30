@@ -15,6 +15,9 @@ class MainWindow < Qt::MainWindow
     slots 'new_clicked()'
     slots 'edit_clicked()'
     slots 'delete_clicked()'
+    <% nav_items.each do |nav_item| %>
+    slots '<%= nav_item.underscore %>_nav_clicked()'
+    <% end %>
     slots 'refresh_now()'
 
     # Example of how to expose a signal
@@ -65,6 +68,10 @@ class MainWindow < Qt::MainWindow
        connect(@ui.newButton, SIGNAL('clicked()'), self, SLOT('new_clicked()'))
        connect(@ui.editButton, SIGNAL('clicked()'), self, SLOT('edit_clicked()'))
        connect(@ui.deleteButton, SIGNAL('clicked()'), self, SLOT('delete_clicked()'))
+      <% nav_items.each do |nav_item| %>
+      connect(@ui.<%= nav_item.camelize(:lower) %>NavLinkButton, SIGNAL('clicked()'), self, SLOT('<%= nav_item.underscore %>_nav_clicked()'))
+      <% end %>
+       
        connect(@ui.actionQuit, SIGNAL('triggered()'), self, SLOT('close()'))
 
        # Example of wiring a signal to a slot. Note how the C++ notation is used for the params
@@ -96,6 +103,14 @@ class MainWindow < Qt::MainWindow
         refresh_now
     end
 
+    <% nav_items.each do |nav_item| %>
+    def <%= nav_item.underscore %>_nav_clicked
+        @active_controller = '<%= nav_item %>'
+        Router.reindex('<%= nav_item %>', self)
+    end
+
+    <% end %>
+
     # def rememberSelection(selected)
     #   Example of a slot implementation
     # end
@@ -122,7 +137,7 @@ class MainWindow < Qt::MainWindow
        # Important: We delegate to the router (& ultimately
        # the controller) so that we involve the controller
        # in the retrieval of data
-       Router.reindex(@active_controller.capitalize)
+       Router.reindex(@active_controller.capitalize, self)
      end
 
      def reset_table(tablemodel)

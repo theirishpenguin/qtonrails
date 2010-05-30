@@ -16,32 +16,45 @@ usage
 =====
 If you'd like a play then you can certainly run through the following steps to understand how qtonrails works. Here goes...
 
-1. You are going to Qt-ify one of your existing Rails models. Ensure that you have at least one record in the database for that model
+1. You are going to Qt-ify two of your existing Rails models. Ensure that you have at least one record in the database for each model
 
 2. Ensure you are in the top level directory of your Rails project (ie. not in vendor/plugins/qtonrails)
 
-3. If you're a *NIX user then you should be able to simply run ./script/generate qtify YourModelName and straight to step 5
+3. If you're a *NIX user then you should be able to simply run ./script/generate qtify YourFirstModelName YourSecondModelName and straight to step 5
 
 4. Run the following
-./script/generate qform YourModelName
+./script/generate qform YourFirstModelName
 ./script/generate qpresenters
-./script/generate qtablemodel YourModelName
-./script/generate qcontroller YourModelName
-./script/generate qview YourModelName
-./script/generate qmainwindow
-./script/generate qmainwindow # NNB: Must do this last step twice!!! Dunno why
+If it exists, delete the file vendor/plugins/qtonrails/config/routes.rb # TEMP WORKAROUND FOR AN ISSUE
+./script/generate qtablemodel YourFirstModelName
+./script/generate qcontroller YourFirstModelName
+./script/generate qview YourFirstModelName
+Then...
+./script/generate qform YourSecondModelName
+./script/generate qpresenters
+Delete the file vendor/plugins/qtonrails/config/routes.rb # TEMP WORKAROUND FOR AN ISSUE
+./script/generate qtablemodel YourSecondModelName
+./script/generate qcontroller YourSecondModelName
+./script/generate qview YourSecondModelName
+Nearly there...
+If it exists, delete the file vendor/plugins/qtonrails/app/qdesigns/qmainwindow.ui # TEMP WORKAROUND FOR AN ISSUE
+./script/generate qmainwindow nav_items:YourFirstModelNamePluralized,YourSecondModelNamePluralized
+./script/generate qmainwindow nav_items:YourFirstModelNamePluralized,YourSecondModelNamePluralized # NNB: Yes, you did have to do this last step twice!!! Dunno why
 
 5. Require any gems your model layer needs to qtonrails/config/requires_list.rb
 
-6. Finally, navigate to the vendor/plugins/qtonrails/ directory and execute the ./run command
+6. Change the DEFAULT_ROUTE in qtonrails/config/requires_list.rb if desired (for example, in this case you should probably change the controller part of the default route to be the controller for your first model, rather than the second one)
+
+7. Finally, navigate to the vendor/plugins/qtonrails/ directory and execute the ./run command
 
 What should happen?
 ===================
-You should get to the list screen for your chosen model, which also acts as a home page. You can do the usual CRUD stuff
+You should get to the list screen for your first chosen model, which also acts as a home page. You can do the usual CRUD stuff
 - View the record
 - Create a new record
 - Edit the record data directly in the grid. Or else you can click the edit button, which will bring up your chosen record for editing.
 - Delete a record
+- Also you can click the navigation link for your second chosen model to get to the same functionality for that model
 
 The idea of this initial release is to show the kind of workflow possible out of the box with qtonrails; and also to help make architectural decisions such as how will we do things like the routing and lots lots more. If you fancy hacking on this project then please fire ahead. I'd be delighted to hear from you if you're interested in this project.
 
@@ -56,9 +69,9 @@ Usage: ./script/generate qform RailsModelName
 Description:
     Adds a .ui file containing a QForm definition for the RailsModel to the vendor/plugins/qtonrails/app/qdesigns directory. This .ui file can be opened in Qt designer.
 
-Usage: ./script/generate qmainwindow
+Usage: ./script/generate qmainwindow [nav_items:NavItem1,NavItem2,...]
 Description:
-    Adds a .ui file containing a Qt::MainWindow definition to the vendor/plugins/qtonrails/app/qdesigns directory. This .ui file can be opened in Qt designer. Additionally it creates a ui_proxy (Ruby presentation of the .ui file) for the Qt::MainWindow along with a qpresenter file. NOTE: There is currently a bug that requires this generator to be run twice - it does not work correctly if only run once.
+    Adds a .ui file containing a Qt::MainWindow definition to the vendor/plugins/qtonrails/app/qdesigns directory. This .ui file can be opened in Qt designer. Additionally it creates a ui_proxy (Ruby presentation of the .ui file) for the Qt::MainWindow along with a qpresenter file. NOTE: There is currently a bug that requires this generator to be run twice - it does not work correctly if only run once. An optional argument that can be passed is nav_items - which will build a navigation link for each NavItem specified. Typically, each NavItem is a Rails controller name. If multiple NavItems are specified then they must be separated by a comma and contain no spaces. Though Rails controller names are CapitalCased (eg. FruitOrders), the navigation link will appear in Title Case (eg. Fruit Orders) on the UI.
 
 Usage: ./script/generate presenters
 Description:
@@ -70,9 +83,9 @@ Usage: ./script/generate qtablemodel RailsModelName
 Description:
     Adds a qtablemodel.rb file and a qtablemodel_gen.rb file to for the RailsModel to the vendor/plugins/qtonrails/app/qtablesmodels directory. A tablemodel (Qt::AbstractTableModel) sits between a list of your Rails models (eg. a list of Product objects) and the widget that displays them in your application (eg. a Qt::TableView widget). A tablemodel is just data - it doesn't know that it's based on a Product model. The qtablemodel_gen.rb file is an autogenerated Ruby representation of tablemodel and is not intended to be edited. Rather, edit the plain qtablemodel.rb file if you need to alter the qtablemodel code.
 
-Usage: ./script/generate qtify RailsModelName
+Usage: ./script/generate qtify RailsModelName1 [RailsModelName2 RailsModelName3 ...]
 Description:
-    This is the qtonrails equivalent of ./script/generate scaffold Foo in the traditional Rails sense. It creates the full set of skeleton files under the vendor/plugins/qtonrails/app directory to run a Qt version of your Rails model. After generating, you can run your Qt application form the vendor/plugins/qtonrails directory using the ./run command. Additionally, you can find .ui files under the vendor/plugins/qtonrails/app/qdesigns directory that can be opened and edited in Qt Designer. Also there are editable files under the qcontrollers, qpresenters, qtablemodels (though not the _gen.rb file) and qviews directories. The files in the ui_proxies directory are not intended to be edited.
+    This is the qtonrails equivalent of ./script/generate scaffold Foo in the traditional Rails sense. It creates the full set of skeleton files under the vendor/plugins/qtonrails/app directory to run a Qt version of your Rails model. After generating, you can run your Qt application form the vendor/plugins/qtonrails directory using the ./run command. Additionally, you can find .ui files under the vendor/plugins/qtonrails/app/qdesigns directory that can be opened and edited in Qt Designer. Also there are editable files under the qcontrollers, qpresenters, qtablemodels (though not the _gen.rb file) and qviews directories. The files in the ui_proxies directory are not intended to be edited. You can specify as many RailsModelName's as you like as arguments, each one will exist as a section in your application accessible from the navigation menu.
 
 Usage: ./script/generate qview RailsModelName
 Description:
@@ -91,4 +104,4 @@ contribute
 Patches appreciated and you are cordially invited to get involved with the qtonrails project at any level. In particular, we are looking for people with some experience of Qt to help guide us on where to go with this plugin. Get in contact using the details listed above.
 
 
-Copyright (c) 2009 [Declan McGrath], released under the MIT license
+Copyright (c) 2009-2010 [Declan McGrath], released under the MIT license

@@ -19,9 +19,9 @@
      <layout class="QVBoxLayout" name="navVerticalLayout">
       <item>
        <layout class="QHBoxLayout" name="navDividerHorizontalLayout">
-       <% nav_items.each.with_index do |nav_item, item_num| %>
+       <% nav_items.each do |nav_item| %>
         <item>
-         <widget class="QCommandLinkButton" name="commandLinkButton_<%= item_num %>">
+         <widget class="QCommandLinkButton" name="<%= nav_item.camelize(:lower) %>NavLinkButton">
           <property name="text">
            <string><%= nav_item.titlecase %></string>
           </property>
