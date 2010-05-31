@@ -9,6 +9,10 @@ require 'active_record'
 
 require 'config/requires_list'
 
+if File.exist?('app/qhelpers/application_helper.rb')
+    require 'app/qhelpers/application_helper'
+end
+
 module QtRails
 
   QTRAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(QTRAILS_ROOT)

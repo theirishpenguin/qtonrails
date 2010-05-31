@@ -5,7 +5,8 @@ require 'app/ui_proxies/<%= proxy_file %>' #eg. product_qform.ui.rb
 # We inherit from Qt:MainWindow as it gives us access to User Interface
 # functionality such as connecting slots and signals
 class <%= class_name %>Window < Qt::MainWindow
- 
+    include ApplicationHelper
+
     slots 'save_clicked()'
     slots 'cancel_clicked()'
 
@@ -68,9 +69,16 @@ class <%= class_name %>Window < Qt::MainWindow
        <% end %>
        @record.save
 
-       form_data_changed()
+       error_message = formatted_errors_for(@record)
 
-       close()
+       if error_message
+            msgBox = Qt::MessageBox.new(self)
+            msgBox.set_text(error_message);
+            msgBox.exec();
+       else
+            form_data_changed()
+            close()
+       end
     end
 
 end
