@@ -28,8 +28,9 @@ class <%= class_name.pluralize %>View
   end
 
   def reindex(records, index_screen)
+    @@index_screen = index_screen
     tablemodel = <%= class_name %>TableModel.new(records)
-    index_screen.reset_table(tablemodel)
+    @@index_screen.reset_table(tablemodel)
   end
 
 end
