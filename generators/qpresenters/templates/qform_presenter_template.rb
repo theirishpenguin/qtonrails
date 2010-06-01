@@ -73,6 +73,7 @@ class <%= class_name %>Window < Qt::MainWindow
 
        if error_message
             msgBox = Qt::MessageBox.new(self)
+            msgBox.set_window_title('Error');
             msgBox.set_text(error_message);
             msgBox.exec();
        else
