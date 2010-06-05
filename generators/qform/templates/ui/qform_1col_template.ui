@@ -22,16 +22,20 @@
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::ExpandingFieldsGrow</enum>
         </property>
-        <% model_keys.each.with_index do |attr_name, row_num| %>
+        <% model_columns.each.with_index do |col, row_num| %>
         <item row="<%= row_num %>" column="0">
-         <widget class="QLabel" name="<%= attr_name %>_label">
+         <widget class="QLabel" name="<%= col.name %>_label">
           <property name="text">
-           <string><%= attr_name.humanize %></string>
+           <string><%= col.name.humanize %></string>
           </property>
          </widget>
         </item>
         <item row="<%= row_num %>" column="1">
-         <widget class="QLineEdit" name="<%= attr_name %>_line_edit"/>
+         <% if col.type == :datetime %>
+         <widget class="QDateTimeEdit" name="<%= col.name %>_date_time_edit"/>
+         <% else %>
+         <widget class="QLineEdit" name="<%= col.name %>_line_edit"/>
+         <% end %>
         </item>
         <% end %>
        </layout>

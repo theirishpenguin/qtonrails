@@ -51,12 +51,12 @@ class <%= class_name %>Window < Qt::MainWindow
     end
 
     def load_data
-       <% model_keys.each do |attr_name| %>
-       <% if ['created_at', 'updated_at'].include? attr_name %>
-       @ui.<%= attr_name %>_line_edit.text = @record.<%= attr_name %>.to_s
-       @ui.<%= attr_name %>_line_edit.read_only = true
+       <% model_columns.each do |col| %>
+       <% if col.type == :datetime %>
+       @ui.<%= col.name %>_date_time_edit.date_time =
+            ruby_to_qt_date_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
        <% else %>
-       @ui.<%= attr_name %>_line_edit.text = @record.<%= attr_name %>
+       @ui.<%= col.name %>_line_edit.text = @record.<%= col.name %> unless @record.<%= col.name %>.blank?
        <% end %>
        <% end %>
 
@@ -64,8 +64,12 @@ class <%= class_name %>Window < Qt::MainWindow
 
 
     def save_clicked()
-       <% model_keys.reject{|k| ['created_at', 'updated_at'].include? k }.each do |attr_name| %>
-       @record.<%= attr_name %> = @ui.<%= attr_name %>_line_edit.text
+       <% model_columns.each do |col| %>
+       <% if col.type == :datetime %>
+       @record.<%= col.name %> = qt_to_ruby_date_time(@ui.<%= col.name %>_date_time_edit.date_time)
+       <% else %>
+       @record.<%= col.name %> = @ui.<%= col.name %>_line_edit.text
+       <% end %>
        <% end %>
        @record.save
 

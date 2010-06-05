@@ -26,9 +26,9 @@ class QpresentersGenerator < Rails::Generator::Base
         class_name = lowered_class_name.camelize 
 
 
-        m.template('qform_presenter_template.rb', "vendor/plugins/qtonrails/app/qpresenters/#{lowered_class_name}_qform_presenter.rb", :assigns => {:proxy_file => ui_proxy_filename, :model_keys => model_keys(eval(class_name).new), :class_name => class_name } )
+        m.template('qform_presenter_template.rb', "vendor/plugins/qtonrails/app/qpresenters/#{lowered_class_name}_qform_presenter.rb", :assigns => {:proxy_file => ui_proxy_filename, :model_columns => model_columns(eval class_name), :class_name => class_name } )
 
-        m.template('qform_read_only_presenter_template.rb', "vendor/plugins/qtonrails/app/qpresenters/#{lowered_class_name}_qform_read_only_presenter.rb", :assigns => {:proxy_file => ui_proxy_filename, :model_keys => model_keys(eval(class_name).new), :class_name => class_name } )
+        m.template('qform_read_only_presenter_template.rb', "vendor/plugins/qtonrails/app/qpresenters/#{lowered_class_name}_qform_read_only_presenter.rb", :assigns => {:proxy_file => ui_proxy_filename, :model_columns => model_columns(eval class_name), :class_name => class_name } )
       end
 
     end
@@ -36,17 +36,8 @@ class QpresentersGenerator < Rails::Generator::Base
    end
 
 
-  def model_keys(a_model)
-
-    # Ensure that timestamps appear at the end if they exist
-    the_model_keys = a_model.attributes.keys.clone
-
-    timestamps = the_model_keys.reject do |k|
-        ['created_at', 'updated_at'].include? k
-    end
-
-    the_model_keys = the_model_keys - timestamps
-    timestamps + the_model_keys
+  def model_columns(a_class)
+    a_class.columns.reject{|col| ['id', 'created_at', 'updated_at'].include? col.name }
   end
 
 end

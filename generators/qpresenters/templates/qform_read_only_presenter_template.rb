@@ -5,7 +5,8 @@ require 'app/ui_proxies/<%= proxy_file %>' #eg. product_qform.ui.rb
 # We inherit from Qt:MainWindow as it gives us access to User Interface
 # functionality such as connecting slots and signals
 class <%= class_name %>ReadOnlyWindow < Qt::MainWindow
- 
+    include ApplicationHelper
+
     slots 'cancel_clicked()'
 
     # We are then free to put our own code into this class without fear
@@ -47,9 +48,15 @@ class <%= class_name %>ReadOnlyWindow < Qt::MainWindow
     end
 
     def load_data
-       <% model_keys.each do |attr_name| %>
-       @ui.<%= attr_name %>_line_edit.text = @record.<%= attr_name %>.to_s
-       @ui.<%= attr_name %>_line_edit.read_only = true
+       <% model_columns.each do |col| %>
+       <% if col.type == :datetime %>
+       @ui.<%= col.name %>_date_time_edit.date_time =
+            ruby_to_qt_date_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
+       @ui.<%= col.name %>_date_time_edit.read_only = true
+       <% else %>
+       @ui.<%= col.name %>_line_edit.text = @record.<%= col.name %> unless @record.<%= col.name %>.blank?
+       @ui.<%= col.name %>_line_edit.read_only = true
+       <% end %>
        <% end %>
     end
 
