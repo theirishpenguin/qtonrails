@@ -1,19 +1,36 @@
-class KdeifyGenerator < Rails::Generator::NamedBase
+require 'fileutils'
+
+class KdeifyGenerator < Rails::Generator::Base
 
   def manifest
+
     record do |m|
 
-      puts "Beginning KDE-ification of #{class_name} model"
+      # Note: This can currently only generate one controller without hanging as an
+      # existing config/routes.rb under qtonrails will cause trouble for subsequent generations
+
+      args.each do |class_name|
+        puts "Beginning KDE-ification of #{class_name} model"
+        puts '*' * 40
+        puts `script/generate qform #{class_name}`
+        puts `script/generate qpresenters`
+        FileUtils.rm_rf 'vendor/plugins/qtonrails/config/routes.rb'  # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
+        puts `script/generate qcontroller #{class_name}`
+        puts `script/generate qview #{class_name}`
+        puts '*' * 40
+        puts "Completed KDE-ification of #{class_name} model"
+        puts ""
+      end
+
+
+      puts "Generating main window"
       puts '*' * 40
-      puts `script/generate qform #{class_name}`
-      puts `script/generate qpresenters`
-      puts `script/generate qtablemodel #{class_name}`
-      puts `script/generate qcontroller #{class_name}`
-      puts `script/generate qview #{class_name}`
-      puts `script/generate kmainwindow`
-      puts `script/generate kmainwindow` # NNB: Must do this last step twice!!! Dunno why
+      FileUtils.rm_rf 'vendor/plugins/qtonrails/app/qdesigns/kmainwindow.ui' # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
+      # Note: We pluralize here as the navigation items should be plural (like a controller name, not a model name)
+      puts `script/generate kmainwindow nav_items:#{args.map(&:pluralize).join(',')}`
+      puts `script/generate kmainwindow nav_items:#{args.map(&:pluralize).join(',')}` # NNB: Must do this last step twice!!! Dunno why
       puts '*' * 40
-      puts "Completed KDE-ification of #{class_name} model"
+      puts "Completed main window"
 
     end
   end

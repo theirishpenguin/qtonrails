@@ -2,7 +2,6 @@ class QmainwindowGenerator < Rails::Generator::Base
 
   def manifest
     record do |m|
-#require 'ruby-debug' ; debugger
 
       # Parse any supplied parameters
       # eg. ["nav_items:Home,ToyMasters,Worlds"] => ["nav_items:Home,ToyMasters,Worlds"]
