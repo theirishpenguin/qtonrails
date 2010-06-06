@@ -15,8 +15,7 @@ class Router
 
   def self.choose(route = {})
     route = DEFAULT_ROUTE.clone if route.blank?
-    name = route[:controller].to_s.capitalize
-
+    name = route[:controller].to_s.camelcase
     view = eval("#{name}View")
     controller = eval("#{name}Controller")
     data = controller.new.send(route[:action])

@@ -54,7 +54,13 @@ class <%= class_name %>Window < Qt::MainWindow
        <% model_columns.each do |col| %>
        <% if col.type == :datetime %>
        @ui.<%= col.name %>_date_time_edit.date_time =
-            ruby_to_qt_date_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
+            QtrSupport::ruby_to_qt_date_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
+       <% elsif col.type == :time %>
+       @ui.<%= col.name %>_time_edit.time =
+            QtrSupport::ruby_to_qt_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
+       <% elsif col.type == :date %>
+       @ui.<%= col.name %>_date_edit.date =
+            QtrSupport::ruby_to_qt_date(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
        <% else %>
        @ui.<%= col.name %>_line_edit.text = @record.<%= col.name %> unless @record.<%= col.name %>.blank?
        <% end %>
@@ -66,7 +72,11 @@ class <%= class_name %>Window < Qt::MainWindow
     def save_clicked()
        <% model_columns.each do |col| %>
        <% if col.type == :datetime %>
-       @record.<%= col.name %> = qt_to_ruby_date_time(@ui.<%= col.name %>_date_time_edit.date_time)
+       @record.<%= col.name %> = QtrSupport::qt_to_ruby_date_time(@ui.<%= col.name %>_date_time_edit.date_time)
+       <% elsif col.type == :time %>
+       @record.<%= col.name %> = QtrSupport::qt_to_ruby_time(@ui.<%= col.name %>_time_edit.time)
+       <% elsif col.type == :date %>
+       @record.<%= col.name %> = QtrSupport::qt_to_ruby_date(@ui.<%= col.name %>_date_edit.date)
        <% else %>
        @record.<%= col.name %> = @ui.<%= col.name %>_line_edit.text
        <% end %>

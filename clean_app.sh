@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd app
-rm -fr qcontrollers qdesigns qpresenters qtablemodels qviews ui_proxies
+rm -fr qcontrollers qdesigns qpresenters qviews ui_proxies

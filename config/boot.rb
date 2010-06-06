@@ -21,7 +21,9 @@ module QtRails
   class Boot
 
     def self.start
-      require "#{QTRAILS_ROOT}/lib/n_v_pair.rb"
+      require "#{QTRAILS_ROOT}/lib/n_v_pair"
+      require "#{QTRAILS_ROOT}/lib/qtr_support"
+      require "#{QTRAILS_ROOT}/lib/qtr_table_model"
 
       Dir.glob("#{RAILS_ROOT}/app/models/*.rb") {|f| require f}
       Dir.glob("#{QTRAILS_ROOT}/app/qtablemodels/*.rb") {|f| require f}

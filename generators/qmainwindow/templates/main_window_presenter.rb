@@ -137,7 +137,7 @@ class MainWindow < Qt::MainWindow
        # Important: We delegate to the router (& ultimately
        # the controller) so that we involve the controller
        # in the retrieval of data
-       Router.reindex(@active_controller.capitalize, self)
+       Router.reindex(@active_controller.camelcase, self)
      end
 
      def reset_table(tablemodel)

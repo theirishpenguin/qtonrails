@@ -15,7 +15,6 @@ class QtifyGenerator < Rails::Generator::Base
         puts `script/generate qform #{class_name}`
         puts `script/generate qpresenters`
         FileUtils.rm_rf 'vendor/plugins/qtonrails/config/routes.rb'  # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
-        puts `script/generate qtablemodel #{class_name}`
         puts `script/generate qcontroller #{class_name}`
         puts `script/generate qview #{class_name}`
         puts '*' * 40

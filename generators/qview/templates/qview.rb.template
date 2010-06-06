@@ -22,14 +22,14 @@ class <%= class_name.pluralize %>View
   end
            
   def index(records)
-    tablemodel = <%= class_name %>TableModel.new(records)
+    tablemodel = QtrTableModel.new(<%= class_name %>, records)
     @@index_screen = MainWindow.new(nil, tablemodel, '<%= controller_name %>')
     @@index_screen.show
   end
 
   def reindex(records, index_screen)
     @@index_screen = index_screen
-    tablemodel = <%= class_name %>TableModel.new(records)
+    tablemodel = QtrTableModel.new(<%= class_name %>, records)
     @@index_screen.reset_table(tablemodel)
   end
 
