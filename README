@@ -87,7 +87,7 @@ Description:
 
 KDE Support
 -----------
-There is very very early work started on generating a KDE app instead of a Qt app. There are 'kdeify' and 'kmainwindow' generators available which currently generates slightly different code from it's Qt cousin.
+There is very very early work started on generating a KDE app instead of a Qt app. There are 'kdeify' and 'kmainwindow' generators available which currently generates slightly different code from it's Qt cousin. Also use, ./run-kde instead of the ./run which is used to launch Qt applications.
 
 Interesting titbits
 -------------------
