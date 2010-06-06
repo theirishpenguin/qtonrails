@@ -93,6 +93,23 @@ Interesting titbits
 -------------------
 QtrTableModel: One core class is the QtrTableModel class which lives in the lib directory. The QtrTableModel wraps any RailsModel and provides us with a tablemodel (Qt::AbstractTableModel), which sits between a list of records of a Rails model (eg. a list of Product objects) and the widget that displays them in your application (eg. a Qt::TableView widget). A tablemodel is just data - it doesn't know that it's based on a Product model.
 
+Recent changes
+--------------
+* Support for a basic menu to move between different areas of the application (eg. between controllers)
+* Model validation errors displayed in when creating/editing a record via a form
+* Added support for Date/Time/DateTime types (you can now in-situ edit them in grid or have appropirate widgets generated in forms)
+* No longer display timestamps by default on grid
+* Basic work started on allowing KDE apps to be generated, as opposed to just Qt apps
+
+
+Known issues
+------------
+* Clicking View/Edit/Delete without selecting a row causes a crash
+* Model validation errors not displayed in when editing a record via an in-situ grid
+* Selecting a row actually selects a cell within the row - this may be undesirable
+* No work done on handling booleans or checkbox widgets just yet
+* Grids do not resize or autoexpand to fit entire screen
+
 whoami
 ======
 
