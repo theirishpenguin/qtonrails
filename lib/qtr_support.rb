@@ -33,8 +33,9 @@ module QtrSupport
     end
 
     def self.qt_to_ruby_time(time)
-        now = Time.now
-        Time.local(now.year, now.month, now.day, time.hour, time.minute, time.second, 0)
+        # Note: Rails uses the first day of Jan 2000 as a dummy date component
+        # of the Time class as Ruby's Time class actually contains date info
+        Time.local(2000, 1, 1, time.hour, time.minute, time.second, 0)
     end
 
 end
