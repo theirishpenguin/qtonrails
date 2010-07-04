@@ -55,6 +55,10 @@ class MainWindow < Qt::MainWindow
        @ui.tableView.model = tablemodel
        @tableview = @ui.tableView
        @tableview.setColumnHidden(ID_COLUMN, true)
+       @tableview.resizeColumnsToContents()
+       <% if table_selection == 'row' %>
+       @tableview.setSelectionBehavior(Qt::AbstractItemView::SelectRows)
+       <% end %>
 
        # TODO: Look into selecting a whole row at a time rather than by cell
        # Something like @tableview.selectionModel = Qt::ItemSelectionModel::Rows

@@ -26,6 +26,12 @@ class QmainwindowGenerator < Rails::Generator::Base
         my_args['nav_items'] = []
       end
 
+      my_args['table_selection'] ||= 'row'
+      unless ['row', 'cell'].include? my_args['table_selection']
+        puts 'Invalid table_selection parameter specified - can be row (the default) or cell'
+        return false
+      end
+        
       qdesigns_dir = 'vendor/plugins/qtonrails/app/qdesigns'
       m.directory qdesigns_dir
       m.template('ui/qmainwindow_template.ui', "#{qdesigns_dir}/qmainwindow.ui", :assigns => {:nav_items => my_args['nav_items']})
@@ -43,7 +49,7 @@ class QmainwindowGenerator < Rails::Generator::Base
       # non-main window presenters
       qpresenters_dir = 'vendor/plugins/qtonrails/app/qpresenters'
       m.directory qpresenters_dir
-      m.template('main_window_presenter.rb', "#{qpresenters_dir}/main_window_presenter.rb", :assigns => {:nav_items => my_args['nav_items']})
+      m.template('main_window_presenter.rb', "#{qpresenters_dir}/main_window_presenter.rb", :assigns => {:nav_items => my_args['nav_items'], :table_selection => my_args['table_selection'] })
 
     end
   end
