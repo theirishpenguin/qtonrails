@@ -5,6 +5,7 @@ require 'app/ui_proxies/qmainwindow.ui.rb'
 # We inherit from Qt:MainWindow as it gives us access to User Interface
 # functionality such as connecting slots and signals
 class MainWindow < Qt::MainWindow
+    include ApplicationHelper
 
     ID_COLUMN = 0
 
@@ -84,27 +85,22 @@ class MainWindow < Qt::MainWindow
     end
 
     def view_clicked
-        Router.params[:id] = record_id()
-        Router.choose({:controller => @active_controller, :action => 'view'})
+        act_upon_selection { Router.choose :controller => @active_controller, :action => 'view' }
     end
 
     def new_clicked
-        
-        Router.choose({:controller => @active_controller, :action => 'new'})
+        Router.choose :controller => @active_controller, :action => 'new'
     end
 
     def edit_clicked
-        
-        Router.params[:id] = record_id()
-        Router.choose({:controller => @active_controller, :action => 'edit'})
+        act_upon_selection { Router.choose :controller => @active_controller, :action => 'edit' }
     end
 
     def delete_clicked
-        
-        Router.params[:id] = record_id()
-        Router.choose({:controller => @active_controller, :action => 'delete'})
-
-        refresh_now
+        act_upon_selection do
+            Router.choose :controller => @active_controller, :action => 'delete'
+            refresh_now
+        end
     end
 
     <% nav_items.each do |nav_item| %>
@@ -118,6 +114,11 @@ class MainWindow < Qt::MainWindow
     # def rememberSelection(selected)
     #   Example of a slot implementation
     # end
+
+      def act_upon_selection
+          Router.params[:id] = record_id()
+          Router.params[:id] > 0 ? yield : display_error('Please select a record')
+      end
 
      def record_id
         model_index_to_record_id(@tableview.currentIndex)
