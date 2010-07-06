@@ -30,6 +30,17 @@ class QtifyGenerator < Rails::Generator::Base
         puts ""
       end
 
+      # THIS BLOCK OF CODE IS A HACK TO ENSURE THAT THE FINAL ROUTES FILE GENERATED
+      # HAS DEFAULT ROUTE REFERENCING THE FIRST CONTROLLER
+      default_section = sections[0]
+      puts 'Beginnning update of default route file'
+      puts '*' * 40
+      puts "Setting default route to #{default_section}"
+      FileUtils.rm_rf 'vendor/plugins/qtonrails/config/routes.rb'  # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
+      puts `script/generate qcontroller #{default_section}`
+      puts '*' * 40
+      puts 'Completed update of default route file'
+      puts ''
 
       puts "Generating main window"
       puts '*' * 40
