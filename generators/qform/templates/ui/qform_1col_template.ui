@@ -22,7 +22,8 @@
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::ExpandingFieldsGrow</enum>
         </property>
-        <% model_columns.each.with_index do |col, row_num| %>
+        <% require "enumerator" %>
+        <% model_columns.enum_for(:each_with_index).each do |col, row_num| %>
         <item row="<%= row_num %>" column="0">
          <widget class="QLabel" name="<%= col.name %>_label">
           <property name="text">

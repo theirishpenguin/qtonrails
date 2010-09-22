@@ -24,7 +24,24 @@ class QtrTableModel < Qt::AbstractTableModel
         # and this is important when deciding what time of widget to display
 
         @time_columns = []
-        @active_record_class.columns.each_with_index{|col, i| @time_columns << i if col.type == :time}
+        #enumer = nil
+        #if RUBY_VERSION == '1.8.6'
+        #    enumber = @active_record_class.columns.enum_for(:each_with_index)
+        #else
+        #    enumber = @active_record_class.columns.each_with_index
+        #end
+
+        #enumber.each{|col, i| @time_columns << i if col.type == :time}
+
+        #require "enumerator"
+        #@active_record_class.columns.enum_for(:each_with_index).each{|col, i| @time_columns << i if col.type == :time}
+
+        i = 0
+        @active_record_class.columns.each do |col|
+            @time_columns << i if col.type == :time
+            i += 1
+        end
+
         @labels ||= @keys.collect { |k| k.humanize }
     end
 
