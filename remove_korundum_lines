@@ -1,0 +1,7 @@
+sed "/.*korundum.*/d" app/ui_proxies/player_qform.ui.rb > tmp_afl53453
+mv tmp_afl53453 app/ui_proxies/player_qform.ui.rb
+
+sed "/.*korundum.*/d" app/ui_proxies/qmainwindow.ui.rb > tmp_afl53453
+mv tmp_afl53453 app/ui_proxies/qmainwindow.ui.rb
+
+# grep -r -l kor app/*
