@@ -51,36 +51,40 @@ class <%= class_name %>Window < Qt::MainWindow
     end
 
     def load_data
-       <% model_columns.each do |col| %>
-       <% if col.type == :datetime %>
-       @ui.<%= col.name %>_date_time_edit.date_time =
-            QtrSupport::ruby_to_qt_date_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
-       <% elsif col.type == :time %>
-       @ui.<%= col.name %>_time_edit.time =
-            QtrSupport::ruby_to_qt_time(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
-       <% elsif col.type == :date %>
-       @ui.<%= col.name %>_date_edit.date =
-            QtrSupport::ruby_to_qt_date(@record.<%= col.name %>) unless @record.<%= col.name %>.blank?
-       <% else %>
-       @ui.<%= col.name %>_line_edit.text = @record.<%= col.name %> unless @record.<%= col.name %>.blank?
-       <% end %>
-       <% end %>
+       <%- model_columns.each do |col| -%>
+       <%- col_name = col['name'] -%>
+       <%- col_type = col['type'] -%>
+       <%- if col_type == :datetime -%>
+       @ui.<%= col_name %>_date_time_edit.date_time =
+            QtrSupport::ruby_to_qt_date_time(@record.<%= col_name %>) if @record.respond_to? :<%= col_name %> and @record.<%= col_name %>.present?
+       <%- elsif col_type == :time -%>
+       @ui.<%= col_name %>_time_edit.time =
+            QtrSupport::ruby_to_qt_time(@record.<%= col_name %>) if @record.respond_to? :<%= col_name %> and @record.<%= col_name %>.present?
+       <%- elsif col_type == :date -%>
+       @ui.<%= col_name %>_date_edit.date =
+            QtrSupport::ruby_to_qt_date(@record.<%= col_name %>) if @record.respond_to? :<%= col_name %> and @record.<%= col_name %>.present?
+       <%- else -%>
+       @ui.<%= col_name %>_line_edit.text = @record.<%= col_name %> if @record.respond_to? :<%= col_name %> and @record.<%= col_name %>.present?
+       <%- end -%>
+       <%- end -%>
 
     end
 
 
     def save_clicked()
-       <% model_columns.each do |col| %>
-       <% if col.type == :datetime %>
-       @record.<%= col.name %> = QtrSupport::qt_to_ruby_date_time(@ui.<%= col.name %>_date_time_edit.date_time)
-       <% elsif col.type == :time %>
-       @record.<%= col.name %> = QtrSupport::qt_to_ruby_time(@ui.<%= col.name %>_time_edit.time)
-       <% elsif col.type == :date %>
-       @record.<%= col.name %> = QtrSupport::qt_to_ruby_date(@ui.<%= col.name %>_date_edit.date)
-       <% else %>
-       @record.<%= col.name %> = @ui.<%= col.name %>_line_edit.text
-       <% end %>
-       <% end %>
+       <%- model_columns.each do |col| -%>
+       <%- col_name = col['name'] -%>
+       <%- col_type = col['type'] -%>
+       <%- if col_type == :datetime -%>
+       @record.<%= col_name %> = QtrSupport::qt_to_ruby_date_time(@ui.<%= col_name %>_date_time_edit.date_time)
+       <%- elsif col_type == :time -%>
+       @record.<%= col_name %> = QtrSupport::qt_to_ruby_time(@ui.<%= col_name %>_time_edit.time)
+       <%- elsif col_type == :date -%>
+       @record.<%= col_name %> = QtrSupport::qt_to_ruby_date(@ui.<%= col_name %>_date_edit.date)
+       <%- else -%>
+       @record.<%= col_name %> = @ui.<%= col_name %>_line_edit.text
+       <%- end -%>
+       <%- end -%>
        @record.save
 
        error_message = formatted_errors_for(@record)

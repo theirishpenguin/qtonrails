@@ -14,8 +14,9 @@ class QtrTableModel < Qt::AbstractTableModel
             end
         else
             @keys = []
-            @active_record_class.columns.map do |col|
-                @keys << col.name unless ['created_at', 'updated_at'].include? col.name
+
+            RemoteResourceLookup.resource_fields_for(@active_record_class).map do |col|
+                @keys << col['name'] unless ['created_at', 'updated_at'].include? col['name']
             end
         end
 
@@ -24,7 +25,7 @@ class QtrTableModel < Qt::AbstractTableModel
         # and this is important when deciding what time of widget to display
 
         @time_columns = []
-        @active_record_class.columns.each_with_index{|col, i| @time_columns << i if col.type == :time}
+        RemoteResourceLookup.resource_fields_for(@active_record_class).each_with_index{|col, i| @time_columns << i if col['type'] == :time} #TODO: Should not be calling resource_fields_for(). Store it from earlier
         @labels ||= @keys.collect { |k| k.humanize }
     end
 

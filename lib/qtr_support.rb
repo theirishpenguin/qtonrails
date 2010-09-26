@@ -16,7 +16,6 @@ module QtrSupport
         Qt::Time.new(time.hour, time.min, time.sec)
     end
 
-
     def self.qt_to_ruby_date_time(datetime)
 
         date = datetime.date
@@ -37,5 +36,10 @@ module QtrSupport
         # of the Time class as Ruby's Time class actually contains date info
         Time.local(2000, 1, 1, time.hour, time.minute, time.second, 0)
     end
+
+     def self.resource_without_leading_site(full_resource_url, site_url)
+        # TODO: Make me less static and put me somewhere nice
+        full_resource_url.gsub(site_url, '')
+    end 
 
 end

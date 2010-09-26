@@ -1,0 +1,63 @@
+class <%= class_name.pluralize %>Controller
+
+  def view
+    find_one
+  end
+
+  def new
+    <%= class_name %>.new
+  end
+
+  def edit
+    find_one
+  end
+
+  def delete
+    find_one.destroy
+  end
+
+  def index
+    find_all
+  end
+
+
+  private
+
+  def find_one
+    # Use this form if Router.params[:id] contains a simple indentifier such as an integer
+    <%= class_name %>.find(Router.params[:id])
+
+    # Use this form if the :from clause identifies a full URI to the resource
+    # eg. <%= class_name %>.find(:one, :from => "/<%= class_name.tableize %>/46.xml")
+    # <%= class_name %>.find(:one, :from => "/#{Router.params[:id]}.xml")
+  end
+
+
+  def find_all
+    <%= class_name.tableize %> = <%= class_name %>.find(:all)
+
+    # Use this form if the :from clause identifies a full URI to the resource
+    # <%= class_name.tableize %> = <%= class_name %>.find(:all, :from => "/<%= class_name.tableize %>.xml")
+
+    # Can use querystrings with parameters if you like
+    # <%= class_name.tableize %> = <%= class_name %>.find(:one, :from => "/clients.xml?cust_id=34").<%= class_name.tableize %>
+
+    # If returned data does not have an 'id' attribute then we should choose one
+    # promote_attribute_to_id_field_for <%= class_name %>, <%= class_name.tableize %>, 'chosen_attribute'
+    
+    <%= class_name.tableize %>
+  end
+
+
+  # Don't really understand how this function works - concerns dealing with more complex URIs
+  def promote_attribute_to_id_field_for(resource_class, collection, attr)
+
+    collection.each do |item|
+      item.attributes['id'] = QtrSupport.resource_without_leading_site(
+        item.attributes[attr],
+        resource_class.site.to_s)
+    end
+
+  end
+
+end

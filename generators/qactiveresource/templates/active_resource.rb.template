@@ -1,0 +1,4 @@
+class <%= resource_name %> < ActiveResource::Base
+  self.site = "<%= site %>"
+end
+

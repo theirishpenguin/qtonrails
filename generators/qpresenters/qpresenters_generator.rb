@@ -1,4 +1,5 @@
 class QpresentersGenerator < Rails::Generator::Base
+  include GeneratorHelper
 
   def manifest
     record do |m|
@@ -34,10 +35,5 @@ class QpresentersGenerator < Rails::Generator::Base
     end
 
    end
-
-
-  def model_columns(a_class)
-    a_class.columns.reject{|col| ['id', 'created_at', 'updated_at'].include? col.name }
-  end
 
 end

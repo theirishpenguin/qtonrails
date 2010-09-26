@@ -1,0 +1,17 @@
+Usage: ./script/generate qactiveresource RemoteResourceDefinition
+
+Examples:
+./script/generate qactiveresource Order:"http://example.com"[xml,/orders.xml?q=33,id:integer,name:string,description:text]
+
+Description:
+    This creates an ActiveResource class under app/models directory of our Rails project and also adds the ActiveResource to vendor/plugins/qtonrails/config/remote_resources.rb.
+
+The RemoteResourceDefinition is a string that defines a remote resource with the syntax
+
+ACTIVE_RESOURCE_NAME:"RESOURCE_SITE_URL"[RESPONSE_FORMAT,/RESOURCE_QUERYSTRING,RESOURCE_ATTRIB_1_NAME:RESOURCE_ATTRIB_1_TYPE,RESOURCE_ATTRIB_2_NAME:RESOURCE_ATTRIB_2_TYPE, ...]
+
+NOTE: RESOURCE_ATTRIB_1 should the the record identifier.
+
+You can specify as many name RESOURCE_ATTRIB name-value pairs as you like. These will determine what fields from the response will be displayed on the UI. The RESPONSE_FORMAT is typically XML or JSON.
+
+An ActiveResource does not need to already exist under your app/models directory. This generator will create one for you. Also, if each remote resource will put an entry into the config/remote_resources.rb file.

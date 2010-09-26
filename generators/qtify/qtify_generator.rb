@@ -6,18 +6,32 @@ class QtifyGenerator < Rails::Generator::Base
 
     record do |m|
 
+      qactive_resource_names = []
+      qactive_resource_args = []
+      # Extract any qactiveresource arguments, eg. taking Search from the following...
+      # ./script/generate qtify Fixture Search:http://example.com[xml,/search.xml?q=ebi,id:integer,name:string,description:text])
+      args.each do |arg|
+        if arg.include? '[' # this is how we idenify an activeresource arg
+          qactive_resource_name = arg.split(':').first
+          qactive_resource_names << qactive_resource_name 
+          qactive_resource_args << arg
+        end
+      end
+  
+      # Remove qactive_resouce args
+      args.delete_if {|arg| arg.include? '[' }
+
       # Note: This can currently only generate one controller without hanging as an
       # existing config/routes.rb under qtonrails will cause trouble for subsequent generations
 
       named_args = [] # We will extract args that include a colon as named arguments
-
-      sections = []
+      active_record_sections = []
       args.each do |arg|
         named_args = args.select {|arg| arg.include? ':' }
-        sections = args - named_args
+        active_record_sections = args - named_args
       end
 
-      sections.each do |class_name|
+      active_record_sections.each do |class_name|
         puts "Beginning Qt-ification of #{class_name} model"
         puts '*' * 40
         puts `script/generate qform #{class_name}`
@@ -30,17 +44,25 @@ class QtifyGenerator < Rails::Generator::Base
         puts ""
       end
 
-      # THIS BLOCK OF CODE IS A HACK TO ENSURE THAT THE FINAL ROUTES FILE GENERATED
-      # HAS DEFAULT ROUTE REFERENCING THE FIRST CONTROLLER
-      default_section = sections[0]
-      puts 'Beginnning update of default route file'
-      puts '*' * 40
-      puts "Setting default route to #{default_section}"
-      FileUtils.rm_rf 'vendor/plugins/qtonrails/config/routes.rb'  # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
-      puts `script/generate qcontroller #{default_section}`
-      puts '*' * 40
-      puts 'Completed update of default route file'
-      puts ''
+      qactive_resource_args.each_with_index do |cmd, i|
+        qactive_resource_name = qactive_resource_names[i] 
+        puts "Beginning Qt-ification of remote resources"
+        puts '*' * 40
+        puts 'Warning: This will overwrite any ActiveResource models requested to be generated under app/models. Ok? (Press Return to continue or Ctrl-C to exit)'
+        gets
+        puts '*' * 40
+        puts `script/generate qactiveresource #{cmd}`
+        puts `script/generate qform #{qactive_resource_name}`
+        puts `script/generate qpresenters`
+        FileUtils.rm_rf 'vendor/plugins/qtonrails/config/routes.rb'  # HACK! NEEDED AS ANY PROMPT HANGS SCRIPT
+        puts `script/generate qcontroller #{qactive_resource_name} --remote-resource`
+        puts `script/generate qview #{qactive_resource_name}`
+        puts '*' * 40
+        puts "Completed Qt-ification of remote resources"
+        puts ""
+      end
+
+      sections = active_record_sections + qactive_resource_names
 
       puts "Generating main window"
       puts '*' * 40

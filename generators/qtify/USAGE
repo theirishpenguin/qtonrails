@@ -1,4 +1,23 @@
-Usage: ./script/generate qtify RailsModelName1 [RailsModelName2 RailsModelName3 ...] [table_selection:row|cell]
+Usage: ./script/generate qactiveresource RailsResource1 [RailsResource2 RailsResource3 ...] [table_selection:row|cell]
+
+Examples:
+# Product is a Rails model
+./script/generate qtify Product
+# Order is a remote resource
+./script/generate qtify Order:"http://example.com"[xml,/orders.xml?q=33,id:integer,name:string,description:text]
+# Example showing multiple a Rails model (Product) and a remote resource
+# (Order) and using JSON instead of XML
+./script/generate qtify Product Order:"http://example.com"[js,/orders.js?q=33,id:integer,name:string,description:text]
 
 Description:
-    This is the qtonrails equivalent of ./script/generate scaffold Foo in the traditional Rails sense. It creates the full set of skeleton files under the vendor/plugins/qtonrails/app directory to run a Qt version of your Rails model. After generating, you can run your Qt application form the vendor/plugins/qtonrails directory using the ./run command. Additionally, you can find .ui files under the vendor/plugins/qtonrails/app/qdesigns directory that can be opened and edited in Qt Designer. Also there are editable files under the qcontrollers, qpresenters and qviews directories. The files in the ui_proxies directory are not intended to be edited. You can specify as many RailsModelName's as you like as arguments, each one will exist as a section in your application accessible from the navigation menu.  Finally, by setting table_selection, you can specify whether a click within the table selects the entire row or just the cell clicked on; row selection is the default.
+    This is the qtonrails equivalent of ./script/generate scaffold Foo in the traditional Rails sense. It creates the full set of skeleton files under the vendor/plugins/qtonrails/app directory to run a Qt version of your Rails model. After generating, you can run your Qt application form the vendor/plugins/qtonrails directory using the ./run command. Additionally, you can find .ui files under the vendor/plugins/qtonrails/app/qdesigns directory that can be opened and edited in Qt Designer. Also there are editable files under the qcontrollers, qpresenters and qviews directories. The files in the ui_proxies directory are not intended to be edited. You can specify as many RailsResource's as you like as arguments, each one will exist as a section in your application accessible from the navigation menu. A RailsResource can either be a model name or a string that defines a remote resource with the syntax
+
+ACTIVE_RESOURCE_NAME:"RESOURCE_SITE_URL"[RESPONSE_FORMAT,/RESOURCE_QUERYSTRING,RESOURCE_ATTRIB_1_NAME:RESOURCE_ATTRIB_1_TYPE,RESOURCE_ATTRIB_2_NAME:RESOURCE_ATTRIB_2_TYPE, ...]
+
+NOTE: RESOURCE_ATTRIB_1 should the the record identifier.
+
+You can specify as many name RESOURCE_ATTRIB name-value pairs as you like. These will determine what fields from the response will be displayed on the UI. The RESPONSE_FORMAT is typically XML or JSON.
+
+An ActiveResource does not need to already exist under your app/models directory. This generator will create one for you. Also, if each remote resource will put an entry into the config/remote_resources.rb file.
+
+Finally, by setting table_selection, you can specify whether a click within the table selects the entire row or just the cell clicked on; row selection is the default.

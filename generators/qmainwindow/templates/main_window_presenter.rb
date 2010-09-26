@@ -16,9 +16,9 @@ class MainWindow < Qt::MainWindow
     slots 'new_clicked()'
     slots 'edit_clicked()'
     slots 'delete_clicked()'
-    <% nav_items.each do |nav_item| %>
+    <%- nav_items.each do |nav_item| -%>
     slots '<%= nav_item.underscore %>_nav_clicked()'
-    <% end %>
+    <%- end -%>
     slots 'refresh_now()'
 
     # Example of how to expose a signal
@@ -57,9 +57,9 @@ class MainWindow < Qt::MainWindow
        @tableview = @ui.tableView
        @tableview.setColumnHidden(ID_COLUMN, true)
        @tableview.resizeColumnsToContents()
-       <% if table_selection == 'row' %>
+       <%- if table_selection == 'row' -%>
        @tableview.setSelectionBehavior(Qt::AbstractItemView::SelectRows)
-       <% end %>
+       <%- end -%>
 
        # TODO: Look into selecting a whole row at a time rather than by cell
        # Something like @tableview.selectionModel = Qt::ItemSelectionModel::Rows
@@ -73,9 +73,9 @@ class MainWindow < Qt::MainWindow
        connect(@ui.newButton, SIGNAL('clicked()'), self, SLOT('new_clicked()'))
        connect(@ui.editButton, SIGNAL('clicked()'), self, SLOT('edit_clicked()'))
        connect(@ui.deleteButton, SIGNAL('clicked()'), self, SLOT('delete_clicked()'))
-      <% nav_items.each do |nav_item| %>
+      <%- nav_items.each do |nav_item| -%>
       connect(@ui.<%= nav_item.camelize(:lower) %>NavLinkButton, SIGNAL('clicked()'), self, SLOT('<%= nav_item.underscore %>_nav_clicked()'))
-      <% end %>
+      <%- end -%>
        
        connect(@ui.actionQuit, SIGNAL('triggered()'), self, SLOT('close()'))
 
@@ -103,13 +103,13 @@ class MainWindow < Qt::MainWindow
         end
     end
 
-    <% nav_items.each do |nav_item| %>
+    <%- nav_items.each do |nav_item| -%>
     def <%= nav_item.underscore %>_nav_clicked
         @active_controller = '<%= nav_item %>'
         Router.reindex('<%= nav_item %>', self)
     end
 
-    <% end %>
+    <%- end -%>
 
     # def rememberSelection(selected)
     #   Example of a slot implementation

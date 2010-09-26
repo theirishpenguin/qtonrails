@@ -1,12 +1,5 @@
 # Note: This booter does not use the same pattern as Rails - it's much simpler
 
-
-require 'active_record'
-
-#require 'activeresource'
-#require 'actionpack'
-#require 'activesupport'
-
 require 'config/requires_list'
 
 if File.exist?('app/qhelpers/application_helper.rb')
@@ -23,6 +16,7 @@ module QtRails
     def self.start
       require "#{QTRAILS_ROOT}/lib/n_v_pair"
       require "#{QTRAILS_ROOT}/lib/qtr_support"
+      require "#{QTRAILS_ROOT}/lib/remote_resource_lookup"
       require "#{QTRAILS_ROOT}/lib/qtr_table_model"
 
       Dir.glob("#{RAILS_ROOT}/app/models/*.rb") {|f| require f}
