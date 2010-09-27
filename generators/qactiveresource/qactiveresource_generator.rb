@@ -31,6 +31,7 @@ class QactiveresourceGenerator < Rails::Generator::Base
             end
     
             qactive_resource['fields'] = fields
+            qactive_resource['id_field'] = fields.first.keys.first
             
             qactive_resources[qactive_resource_name] = qactive_resource
           end

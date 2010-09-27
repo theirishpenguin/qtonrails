@@ -14,7 +14,11 @@ module GeneratorHelper
           raise "Remote resources file is empty (#{remote_resources_config})"
         end
         remote_resources = eval(serialized_obj)
-        cols = remote_resources[a_class.name]['fields'].map{|field| {'name' => field.keys.first, 'type' => field.values.first.to_sym}}
+        a_resource_definition = remote_resources[a_class.name]
+        non_id_fields = a_resource_definition['fields'].reject do |field|
+          [a_resource_definition['id_field'], 'created_at', 'updated_at'].include? field.keys.first
+        end
+        cols = non_id_fields.map{|field| {'name' => field.keys.first, 'type' => field.values.first.to_sym}}
       else
         raise "No remote resources file found (#{remote_resources_config})"
       end

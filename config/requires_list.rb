@@ -2,7 +2,7 @@
 require "active_record"
 
 # Enable if you need ActiveResource (you do if you're calling remote resources)
-#require 'active_resource'
+require 'active_resource'
 
 # Example of requiring your typical Rails gem
 #require "authlogic"
